@@ -1,0 +1,62 @@
+* {
+    margin: 0px;
+}
+
+.header {
+    background-color: gray;
+    height: 100px;
+    width: 100%;
+    display: flex;
+}
+
+.logo {
+    height: inherit;
+    width: 15%;
+    background-color: rgb(171, 170, 170);
+}
+
+.navigator {
+    background-color: rgba(22, 23, 22, 0.51);
+    width: 85%;
+    height: inherit;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.navigator a {
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+
+/* Media query for devices with a maximum width of 600px (typical for phones) */
+@media only screen and (max-width: 600px) {
+    .header {
+        height: 80px; /* Adjust height for smaller screens */
+        /* You can add additional styles for smaller screens here */
+    }
+}
+
+.tablediv {
+    margin: 10px;
+}
+
+.tablehead {
+    margin-top: 30px;
+    background-color: gray;
+    border: 0.2px solid rgb(59, 58, 58);
+    padding: 10px;
+    width: 100%;
+    align-content: center;
+    border-collapse: collapse;
+}
+
+td {
+    border: 0.2px solid rgb(59, 58, 58); /* Adjust the width as needed */
+    padding: 8px;
+    text-align: center;
+}
