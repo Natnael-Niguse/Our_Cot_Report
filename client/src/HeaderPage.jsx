@@ -9,8 +9,7 @@ const HeaderPage = () => {
             <div className="navigator">
                 <Link to="/">HOME</Link>
                 <Link to="#">ABOUT</Link>
-                <Link to="CotsPage">Cntract</Link>
-                <button onclick="CotsPages">Create Graph</button>
+                <Link to="CotsPage">CONTRACT</Link>
             </div>
         </div>
     )

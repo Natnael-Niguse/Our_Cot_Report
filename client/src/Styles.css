@@ -2,6 +2,10 @@
     margin: 0px;
 }
 
+body {
+    background-color: rgba(18, 18, 18, 0.89);
+}
+
 .header {
     background-color: gray;
     height: 100px;
@@ -41,22 +45,46 @@
     }
 }
 
-.tablediv {
-    margin: 10px;
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 500px;
+    margin: 15px;
 }
 
-.tablehead {
-    margin-top: 30px;
-    background-color: gray;
-    border: 0.2px solid rgb(59, 58, 58);
-    padding: 10px;
-    width: 100%;
-    align-content: center;
-    border-collapse: collapse;
+.innercontainer div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2px;
 }
 
-td {
-    border: 0.2px solid rgb(59, 58, 58); /* Adjust the width as needed */
-    padding: 8px;
+.innercontainer div p {
+    font-size: 13px;
+    color: white;
+}
+
+.container p {
+    color: white;
     text-align: center;
 }
+
+.table {
+    margin: 50px;
+}
+
+table {
+    width: 100%;
+
+}
+
+th,
+td {
+    color: white;
+    text-align: center;
+    border: solid white;
+}
+
+
+

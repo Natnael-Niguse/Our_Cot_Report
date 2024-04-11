@@ -11,7 +11,7 @@ def get_cftc_data():
     client = Socrata("publicreporting.cftc.gov", app_token="kOiWOfMRsYWWrvOgW0hFxdJmo")
 
     # List of cftc_contract_market_codes
-    contract_market_codes = ['232741', '090741', '092741', '047745', '096742', '112741', '092741', '097741']
+    contract_market_codes = ['232741', '090741', '092741', '047745', '096742', '112741', '092741', '097741', '098662', '088691', '084691', '076651','209742', '12460+', '13874+', '067651']
 
     # Initialize an empty dictionary to store results
     results_dict = {}
