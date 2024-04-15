@@ -45,46 +45,137 @@ body {
     }
 }
 
+/* Define styles for desktop/tablet screens */
+@media only screen and (min-width: 601px) {
+    /* Table styles */
+    .table {
+      margin: 50px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th,
+    td {
+      color: white;
+      text-align: center;
+      border: 0.2px solid rgb(59, 58, 58); /* Adjust border as needed */
+      padding: 8px; /* Adjust padding as needed */
+    }
+    
+    thead {
+      background-color: gray;
+    }
+  
+    /* Bar graph styles */
+    .container {
+      margin: 50px; /* Adjust margin size as needed */
+      display: flex;
+      flex-direction: row;
+      height: 500px;
+      width: calc(100% - 100px); /* Subtract twice the margin size from 100% */
+    }
+  }
+  
+  /* Define styles for mobile screens */
+  @media only screen and (max-width: 600px) {
+    /* Table styles */
+    .table {
+      margin: 10px;
+    }
+    
+    th,
+    td {
+      padding: 4px; /* Adjust padding for mobile */
+    }
+  
+    /* Bar graph styles */
+    .container {
+      margin: 10px; /* Adjust margin size for mobile */
+      display: flex;
+      flex-direction: column;
+      height: auto; /* Adjust height for mobile */
+    }
+    
+    .innercontainer {
+      margin-bottom: 10px; /* Adjust margin between bars for mobile */
+      width: 100%;
+    }
+  
+    .innercontainer div {
+      width: auto; /* Adjust width for bars for mobile */
+    }
+  }
+  
+
+.maincontainer {
+    width: 100%;
+}
+
+
 .container {
+    margin: 50px; /* Adjust margin size as needed */
     display: flex;
     flex-direction: row;
+    height: 300px;
+    width: calc(100% - 100px); /* Subtract twice the margin size from 100% */
     justify-content: center;
-    height: 500px;
-    margin: 15px;
 }
+
+.per {
+  width: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.per p {
+ color: white;
+}
+
 
 .innercontainer div {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    margin-left: 2px;
 }
 
-.innercontainer div p {
-    font-size: 13px;
+.barname{
     color: white;
-}
-
-.container p {
-    color: white;
-    text-align: center;
+    align-items: center;
+    font-size: 12px;
 }
 
 .table {
-    margin: 50px;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 7%;
 }
 
 table {
     width: 100%;
-
+    border-collapse: collapse;
 }
 
 th,
 td {
     color: white;
     text-align: center;
-    border: solid white;
+    border: 0.2px solid rgb(33, 33, 33); /* Adjust border as needed */
+    padding: 8px; /* Adjust padding as needed */
 }
+
+thead {
+    background-color: gray;
+}
+
+
+
+
+
 
 
 
