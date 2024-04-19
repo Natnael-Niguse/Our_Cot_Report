@@ -137,7 +137,11 @@ function CotsPage() {
                                         const totalPosition = item.noncomm_positions_long_all + item.noncomm_positions_short_all;
                                         const longpercentage = ((item.noncomm_positions_long_all / totalPosition) * 100).toFixed(2);
                                         const shortpercentage = (100 - (longpercentage)).toFixed(2);
-                                        const netchange = item.noncomm_positions_long_all - item.noncomm_positions_short_all;
+                                        const preweek_long = (item.noncomm_positions_long_all - item.change_in_noncomm_long_all);
+                                        const preweek_short = (item.noncomm_positions_short_all - item.change_in_noncomm_short_all);
+                                        const preweek_total = (preweek_long + preweek_short);
+                                        const preweek_long_percent = ((preweek_long / preweek_total) * 100).toFixed(2);
+                                        const netchange = (preweek_long_percent - longpercentage).toFixed(2);
                                         return (
                                             <tr key={i}>
                                             {renderSwitch(item.cftc_contract_market_code)}
@@ -155,10 +159,10 @@ function CotsPage() {
                                             )}
                                             <td>{item.noncomm_positions_short_all}</td>
                                             <td>{item.change_in_noncomm_short_all}</td>
-                                            {netchange > 5000 ? (
-                                                <td style={{ backgroundColor: 'rgba(65, 89, 208, 0.718)' }}>{netchange}</td>
+                                            {longpercentage > shortpercentage ? (
+                                                <td style={{ backgroundColor: 'rgba(65, 89, 208, 0.597)' }}>{netchange + '%'}</td>
                                             ) : (
-                                                <td style={{ backgroundColor: 'rgba(233, 101, 101, 0.658)' }}>{netchange}</td>
+                                                <td style={{ backgroundColor: 'rgba(233, 101, 101, 0.658)' }}>{netchange + '%'}</td>
                                             )}
                                         </tr>
 
