@@ -48,7 +48,21 @@ function CotsPage() {
             case '240743':
                 return <td>JP225</td>;
             case '095741':
-                return <td>USDMXN</td>;
+                return <td>MXN</td>;
+            case '232741':
+                return <td>AUD</td>;
+            case '090741':
+                return <td>CAD</td>;
+            case '092741':
+                return <td>CHF</td>;
+            case '096742':
+                return <td>GBP</td>;
+            case '112741':
+                return <td>NZD</td>;
+            case '097741':
+                return <td>JPY</td>;
+            case '099741':
+                return <td>EUR</td>;
             default:
                 return <td>NONE</td>;
             
@@ -62,12 +76,12 @@ function CotsPage() {
             <>
                 <div className='container'>
                     <div className='per'>
-                        <p>100%</p>
-                        <p>80%</p>
-                        <p>60%</p>
-                        <p>40%</p>
-                        <p>20%</p>
-                        <p>0%</p>
+                        <div>100%</div>
+                        <div>80%</div>
+                        <div>60%</div>
+                        <div>40%</div>
+                        <div>20%</div>
+                        <div>0%</div>
                     </div>
                     {data !== null && (
                         data.map((itemGroup, index) => (
@@ -86,11 +100,11 @@ function CotsPage() {
                                     return (
                                         <>
                                             <div className='innercontainer' style={{ width: "3%", margin: '5px' }} key={i}>
-                                                <div className='abovebar' style={{ height: longHeight, backgroundColor: 'rgb(233, 101, 101)' }}>
-                                                    {/*<p>{longpercentage}%</p>*/}
-                                                </div>
-                                                <div className='belowbar' style={{ height: shortHeight, backgroundColor: 'rgb(65, 88, 208)' }}>
+                                                <div className='belowbar' style={{ height: shortHeight, backgroundColor: 'rgb(233, 101, 101)' }}>
                                                     {/* <p>{shortpercentage}%</p>*/}
+                                                </div>
+                                                <div className='abovebar' style={{ height: longHeight, backgroundColor: 'rgb(65, 88, 208)' }}>
+                                                    {/*<p>{longpercentage}%</p>*/}
                                                 </div>
                                                 <p className='barname' style={{ marginTop: count % 2 === 0 ? '0px' : '20px' }}>{renderSwitch(item.cftc_contract_market_code)}</p>
                                             </div>
@@ -121,27 +135,31 @@ function CotsPage() {
                                 <React.Fragment key={index}>
                                     {itemGroup.map((item, i) => {
                                         const totalPosition = item.noncomm_positions_long_all + item.noncomm_positions_short_all;
-                                        const longpercentage = ((item.noncomm_positions_long_all / totalPosition) * 100).toFixed(1);
-                                        const shortpercentage = (100 - (longpercentage)).toFixed(1);
+                                        const longpercentage = ((item.noncomm_positions_long_all / totalPosition) * 100).toFixed(2);
+                                        const shortpercentage = (100 - (longpercentage)).toFixed(2);
                                         const netchange = item.noncomm_positions_long_all - item.noncomm_positions_short_all;
                                         return (
                                             <tr key={i}>
                                             {renderSwitch(item.cftc_contract_market_code)}
-                                            <td>{longpercentage}</td>
-                                            {item.noncomm_positions_long_all > 10000 ? (
-                                                <td style={{ backgroundColor: '#0074db' }}>{item.noncomm_positions_long_all}</td>
+                                            {longpercentage > 50 ? (
+                                                <td style={{ backgroundColor: 'rgb(65, 88, 208)' }}>{longpercentage + '%'}</td>
                                             ) : (
-                                                <td>{item.noncomm_positions_long_all}</td>
+                                                <td style={{ backgroundColor: 'rgba(65, 89, 208, 0.597)' }}>{longpercentage + '%'}</td>
                                             )}
-                                            <td>{shortpercentage}</td>
-                                            {item.noncomm_positions_short_all > 10000 ? (
-                                                <td style={{ backgroundColor: '#f8596a' }}>{item.noncomm_positions_short_all}</td>
+                                            <td>{item.noncomm_positions_long_all}</td>
+                                            <td>{item.change_in_noncomm_long_all}</td>
+                                            {shortpercentage > 50 ? (
+                                                <td style={{ backgroundColor: 'rgb(233, 101, 101)' }}>{shortpercentage + '%'}</td>
                                             ) : (
-                                                <td>{item.noncomm_positions_short_all}</td>
+                                                <td style={{ backgroundColor: 'rgba(233, 101, 101, 0.658)' }}>{shortpercentage + '%'}</td>
                                             )}
                                             <td>{item.noncomm_positions_short_all}</td>
                                             <td>{item.change_in_noncomm_short_all}</td>
-                                            <td>{netchange}</td>
+                                            {netchange > 5000 ? (
+                                                <td style={{ backgroundColor: 'rgba(65, 89, 208, 0.718)' }}>{netchange}</td>
+                                            ) : (
+                                                <td style={{ backgroundColor: 'rgba(233, 101, 101, 0.658)' }}>{netchange}</td>
+                                            )}
                                         </tr>
 
                                         )
