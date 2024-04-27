@@ -60,8 +60,14 @@ def get_cftc_data():
         # Store the results for the current code in the dictionary
         results_dict[code] = code_results
 
+    # Sort the dictionary based on the "noncomm_positions_long_all" values across all contract market codes in descending order
+    sorted_results_dict = {k: sorted(v, key=lambda x: x['noncomm_positions_long_all'], reverse=True) for k, v in results_dict.items()}
+
+    # Sort the dictionary of contract market codes based on the highest non-commercial long positions
+    sorted_results_dict = dict(sorted(sorted_results_dict.items(), key=lambda item: item[1][0]['noncomm_positions_long_all'], reverse=True))
+
     # Return the data as JSON
-    return jsonify(results_dict)
+    return jsonify(sorted_results_dict)
 
 if __name__ == '__main__':
     app.run(debug=True)

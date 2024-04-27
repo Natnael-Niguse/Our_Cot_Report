@@ -16,12 +16,20 @@ function CotsPage() {
                 throw new Error('Failed to fetch data');
             }
             const data = await response.json();
-            setData(Object.values(data));
-            console.log(data);
+            const dataArray = Object.values(data); // Convert object values to array
+            const sortedArray = dataArray.sort((a, b) => {
+                // Sort in descending order based on noncomm_positions_long_all values
+                return b[0].noncomm_positions_long_all - a[0].noncomm_positions_long_all;
+            });
+            setData(sortedArray);
+            console.log(sortedArray);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
+    
+    
+    
 
     const renderSwitch = (param) => {
         switch(param) {
@@ -72,6 +80,41 @@ function CotsPage() {
 
     const GraphCreate = () => {
         let count = 0;
+        let sortedItemGroup = [];
+    
+        // Sort the data based on noncomm_positions_long_all values in descending order
+        const sortedData = data !== null ? [...data].sort((a, b) => b[0].noncomm_positions_long_all - a[0].noncomm_positions_long_all) : [];
+    
+        // Calculate longHeight for each item and sort based on it
+        sortedData.forEach((itemGroup, index) => {
+            const calculatedItemGroup = itemGroup.map(item => {
+            const totalPosition = item.noncomm_positions_long_all + item.noncomm_positions_short_all;
+            const longHeight = (item.noncomm_positions_long_all / totalPosition) * 300;
+            const longpercentage = ((item.noncomm_positions_long_all / totalPosition) * 100).toFixed(2);
+            const preweek_long = (item.noncomm_positions_long_all - item.change_in_noncomm_long_all);
+            const preweek_short = (item.noncomm_positions_short_all - item.change_in_noncomm_short_all);
+            const preweek_total = (preweek_long + preweek_short);
+            const preweek_long_percent = ((preweek_long / preweek_total) * 100).toFixed(2);
+            const netchange = (preweek_long_percent - longpercentage);
+
+            return {
+                ...item,
+                longHeight,
+                netchange
+            };
+        });
+
+            // Sort calculatedItemGroup based on longHeight in descending order
+            const sortedGroup = calculatedItemGroup.sort((a, b) => b.longHeight - a.longHeight);
+            sortedItemGroup.push(sortedGroup);
+        });
+    
+        // Flatten the array of arrays and sort it based on longHeight in descending order
+        const flattenedSortedItemGroup = sortedItemGroup.flat().sort((a, b) => b.longHeight - a.longHeight);
+        // Flatten the array of arrays and sort it based on longHeight in descending order
+        const tableSortedItemGroup = sortedItemGroup.flat().sort((a, b) => b.netchange - a.netchange);
+        console.log(tableSortedItemGroup)
+    
         return (
             <>
                 <div className='container'>
@@ -83,39 +126,31 @@ function CotsPage() {
                         <div>20%</div>
                         <div>0%</div>
                     </div>
-                    {data !== null && (
-                        data.map((itemGroup, index) => (
-                            <React.Fragment key={index}>
-                                {itemGroup.map((item, i) => {
-                                    // Increment the count variable for each iteration of the loop
-                                    count++;
-                                    const totalPosition = item.noncomm_positions_long_all + item.noncomm_positions_short_all;
-                                    const longHeight = (item.noncomm_positions_long_all / totalPosition) * 300 + 'px'; // Set container height (500px) as needed
-                                    const shortHeight = 300 - (item.noncomm_positions_long_all / totalPosition) * 300 + 'px'; // Set container height (500px) as needed
-                                    const longpercentage = ((item.noncomm_positions_long_all / totalPosition) * 100).toFixed(2);
-                                    const shortpercentage = (100 - (longpercentage)).toFixed(2);
-                                    const dataLength = data.length;                             
-                                    const innercontainerwidth = (100 / dataLength) + '%';
-
-                                    return (
-                                        <>
-                                            <div className='innercontainer' style={{ width: "3%", margin: '5px' }} key={i}>
-                                                <div className='belowbar' style={{ height: shortHeight, backgroundColor: 'rgb(233, 101, 101)' }}>
-                                                    {/* <p>{shortpercentage}%</p>*/}
-                                                </div>
-                                                <div className='abovebar' style={{ height: longHeight, backgroundColor: 'rgb(65, 88, 208)' }}>
-                                                    {/*<p>{longpercentage}%</p>*/}
-                                                </div>
-                                                <p className='barname' style={{ marginTop: count % 2 === 0 ? '0px' : '20px' }}>{renderSwitch(item.cftc_contract_market_code)}</p>
-                                            </div>
-                                        </>
-                                    );
-
-                                })}
-                            </React.Fragment>
-                        ))
-                    )}
+                    {flattenedSortedItemGroup.map((item, index) => {
+                        // Increment the count variable for each iteration of the loop
+                        count++;
+                        const totalPosition = item.noncomm_positions_long_all + item.noncomm_positions_short_all;
+                        const longHeight = (item.noncomm_positions_long_all / totalPosition) * 300 + 'px'; // Convert to 'px' after sorting
+                        const shortHeight = (300 - (item.noncomm_positions_long_all / totalPosition) * 300) + 'px'; // Calculate shortHeight based on longHeight
+                        const longpercentage = ((item.noncomm_positions_long_all / totalPosition) * 100).toFixed(2);
+                        const shortpercentage = (100 - longpercentage).toFixed(2);
+                        const dataLength = sortedData.length;
+                        const innercontainerwidth = (100 / dataLength) + '%';
+    
+                        return (
+                            <div className='innercontainer' style={{ width: "3%", margin: '5px'}}>
+                                <div className='belowbar' style={{ height: shortHeight, backgroundColor: 'rgb(233, 101, 101)' }}>
+                                    {/* <p>{shortpercentage}%</p>*/}
+                                </div>
+                                <div className='abovebar' style={{ height: longHeight, backgroundColor: 'rgb(65, 88, 208)' }}>
+                                    {/* <p>{longpercentage}%</p>*/}
+                                </div>
+                                <p className='barname' style={{ marginTop: count % 2 === 0 ? '0px' : '20px' }}>{renderSwitch(item.cftc_contract_market_code)}</p>
+                            </div>
+                        );
+                    })}
                 </div>
+ 
                 <div className='table'>
                     <table>
                         <thead>
@@ -131,48 +166,40 @@ function CotsPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data !== null && data.map((itemGroup, index) => (
-                                <React.Fragment key={index}>
-                                    {itemGroup.map((item, i) => {
-                                        const totalPosition = item.noncomm_positions_long_all + item.noncomm_positions_short_all;
-                                        const longpercentage = ((item.noncomm_positions_long_all / totalPosition) * 100).toFixed(2);
-                                        const shortpercentage = (100 - (longpercentage)).toFixed(2);
-                                        const preweek_long = (item.noncomm_positions_long_all - item.change_in_noncomm_long_all);
-                                        const preweek_short = (item.noncomm_positions_short_all - item.change_in_noncomm_short_all);
-                                        const preweek_total = (preweek_long + preweek_short);
-                                        const preweek_long_percent = ((preweek_long / preweek_total) * 100).toFixed(2);
-                                        const netchange = (preweek_long_percent - longpercentage).toFixed(2);
-                                        return (
-                                            <tr key={i}>
-                                            {renderSwitch(item.cftc_contract_market_code)}
-                                            {longpercentage > 50 ? (
-                                                <td style={{ backgroundColor: 'rgb(65, 88, 208)' }}>{longpercentage + '%'}</td>
-                                            ) : (
-                                                <td style={{ backgroundColor: 'rgba(65, 89, 208, 0.597)' }}>{longpercentage + '%'}</td>
-                                            )}
-                                            <td>{item.noncomm_positions_long_all}</td>
-                                            <td>{item.change_in_noncomm_long_all}</td>
-                                            {shortpercentage > 50 ? (
-                                                <td style={{ backgroundColor: 'rgb(233, 101, 101)' }}>{shortpercentage + '%'}</td>
-                                            ) : (
-                                                <td style={{ backgroundColor: 'rgba(233, 101, 101, 0.658)' }}>{shortpercentage + '%'}</td>
-                                            )}
-                                            <td>{item.noncomm_positions_short_all}</td>
-                                            <td>{item.change_in_noncomm_short_all}</td>
-                                            {longpercentage > shortpercentage ? (
-                                                <td style={{ backgroundColor: 'rgba(65, 89, 208, 0.597)' }}>{netchange + '%'}</td>
-                                            ) : (
-                                                <td style={{ backgroundColor: 'rgba(233, 101, 101, 0.658)' }}>{netchange + '%'}</td>
-                                            )}
-                                        </tr>
-
-                                        )
-                                    })}
-                                </React.Fragment>
-                            ))}
+                            {tableSortedItemGroup.map((item, index) => {
+                                const totalPosition = item.noncomm_positions_long_all + item.noncomm_positions_short_all;
+                                const longpercentage = ((item.noncomm_positions_long_all / totalPosition) * 100).toFixed(2);
+                                const shortpercentage = (100 - (longpercentage)).toFixed(2);
+                                const preweek_long = (item.noncomm_positions_long_all - item.change_in_noncomm_long_all);
+                                const preweek_short = (item.noncomm_positions_short_all - item.change_in_noncomm_short_all);
+                                const preweek_total = (preweek_long + preweek_short);
+                                const preweek_long_percent = ((preweek_long / preweek_total) * 100).toFixed(2);
+                                const netchange = (preweek_long_percent - longpercentage).toFixed(2);
+                                return (
+                                    <tr key={index}>
+                                        {renderSwitch(item.cftc_contract_market_code)}
+                                        {longpercentage > 50 ? (
+                                            <td style={{ backgroundColor: 'rgb(65, 88, 208)' }}>{longpercentage + '%'}</td>
+                                        ) : (
+                                            <td style={{ backgroundColor: 'rgba(65, 89, 208, 0.597)' }}>{longpercentage + '%'}</td>
+                                        )}
+                                        <td>{item.noncomm_positions_long_all}</td>
+                                        <td>{item.change_in_noncomm_long_all}</td>
+                                        {shortpercentage > 50 ? (
+                                            <td style={{ backgroundColor: 'rgb(233, 101, 101)' }}>{shortpercentage + '%'}</td>
+                                        ) : (
+                                            <td style={{ backgroundColor: 'rgba(233, 101, 101, 0.658)' }}>{shortpercentage + '%'}</td>
+                                        )}
+                                        <td>{item.noncomm_positions_short_all}</td>
+                                        <td>{item.change_in_noncomm_short_all}</td>
+                                        <td style={{ backgroundColor: netchange > 0 ? `rgba(65, 88, 208, ${1 - index * 0.05})` : `rgba(233, 101, 101, ${1 - index * 0.05})` }}>{netchange + '%'}</td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
+
             </>
         );
     };
