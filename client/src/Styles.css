@@ -43,7 +43,7 @@ body {
     font-weight: bolder;
     color: white;
     text-decoration: none;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 
@@ -169,10 +169,16 @@ body {
   margin-top: 7%;
 }
 
+
 table {
     width: 100%;
     border-collapse: collapse;
     background-color: rgb(34, 34, 34);
+}
+
+.currency {
+  padding: 0px;
+  border: none;
 }
 
 th,

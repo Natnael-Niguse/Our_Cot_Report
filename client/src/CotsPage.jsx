@@ -34,43 +34,43 @@ function CotsPage() {
     const renderSwitch = (param) => {
         switch(param) {
             case '098662':
-                return <td>USD</td>;
+                return <td className="currency">USD</td>;
             case '088691':
-                return <td>GOLD</td>;
+                return <td className="currency">GOLD</td>;
             case '084691':
-                return <td>SILVER</td>;
+                return <td className="currency">SILVER</td>;
             case '076651':
-                return <td>PLATINUM</td>;
+                return <td className="currency">PLATINUM</td>;
             case '209742':
-                return <td>NAS100</td>;
+                return <td className="currency">NAS100</td>;
             case '12460+':
-                return <td>US30</td>;
+                return <td className="currency">US30</td>;
             case '13874+':
-                return <td>SPX</td>;
+                return <td className="currency">SPX</td>;
             case '067651':
-                return <td>USOIL</td>;
+                return <td className="currency">USOIL</td>;
             case '043602':
-                return <td>US10Y</td>;
+                return <td className="currency">US10Y</td>;
             case '133741':
-                return <td>BTC</td>;
+                return <td className="currency">BTC</td>;
             case '240743':
-                return <td>JP225</td>;
+                return <td className="currency">JP225</td>;
             case '095741':
-                return <td>MXN</td>;
+                return <td className="currency">MXN</td>;
             case '232741':
-                return <td>AUD</td>;
+                return <td className="currency">AUD</td>;
             case '090741':
-                return <td>CAD</td>;
+                return <td className="currency">CAD</td>;
             case '092741':
-                return <td>CHF</td>;
+                return <td className="currency">CHF</td>;
             case '096742':
-                return <td>GBP</td>;
+                return <td className="currency">GBP</td>;
             case '112741':
-                return <td>NZD</td>;
+                return <td className="currency">NZD</td>;
             case '097741':
-                return <td>JPY</td>;
+                return <td className="currency">JPY</td>;
             case '099741':
-                return <td>EUR</td>;
+                return <td className="currency">EUR</td>;
             default:
                 return <td>NONE</td>;
             
@@ -177,7 +177,7 @@ function CotsPage() {
                                 const netchange = (preweek_long_percent - longpercentage).toFixed(2);
                                 return (
                                     <tr key={index}>
-                                        {renderSwitch(item.cftc_contract_market_code)}
+                                        <td className='asset_td' style={{ backgroundColor: netchange > 0 ? `rgba(65, 88, 208, ${1 - index * 0.05})` : `rgba(233, 101, 101, ${index * 0.03})` }}>{renderSwitch(item.cftc_contract_market_code)}</td>
                                         {longpercentage > 50 ? (
                                             <td style={{ backgroundColor: 'rgb(65, 88, 208)' }}>{longpercentage + '%'}</td>
                                         ) : (
@@ -192,7 +192,7 @@ function CotsPage() {
                                         )}
                                         <td>{item.noncomm_positions_short_all}</td>
                                         <td>{item.change_in_noncomm_short_all}</td>
-                                        <td style={{ backgroundColor: netchange > 0 ? `rgba(65, 88, 208, ${1 - index * 0.05})` : `rgba(233, 101, 101, ${1 - index * 0.05})` }}>{netchange + '%'}</td>
+                                        <td style={{ backgroundColor: netchange > 0 ? `rgba(65, 88, 208, ${1 - index * 0.05})` : `rgba(233, 101, 101, ${index * 0.03})` }}>{netchange + '%'}</td>
                                     </tr>
                                 );
                             })}
