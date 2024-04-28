@@ -1,18 +1,24 @@
 import React from "react";
+import logo from './Assets/logo.png';
 import { Link } from 'react-router-dom';
 import './Styles.css'
 
 const HeaderPage = () => {
-    return(
-        <div className="header">
-            <div className="logo"></div>
-            <div className="navigator">
-                <Link to="/">HOME</Link>
-                <Link to="#">ABOUT</Link>
-                <Link to="CotsPage">CONTRACT</Link>
-            </div>
-        </div>
-    )
+    return (
+        <header className="header">
+            <nav className="navbar">
+                <Link to="/" className="logo">
+                    <img src={logo} alt="" className="logo"/>
+                </Link>
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/about">About</Link></li>
+                    <li><Link to="/contact">Contact</Link></li>
+                    <li><Link to="/CotsPage">Services</Link></li>
+                </ul>
+            </nav>
+        </header>
+    );
 }
 
 export default HeaderPage;

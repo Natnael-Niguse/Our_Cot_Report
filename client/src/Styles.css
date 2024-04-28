@@ -3,11 +3,13 @@
 }
 
 body {
-    background-color: rgb(19, 18, 18);
     margin: 0px;
+    background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(background.jpg);
+    background-size: cover;
+    background-position: center;
 }
 
-.header {
+/**.header {
     background-color: gray;
     height: 70px;
     width: 100%;
@@ -15,11 +17,11 @@ body {
     position: fixed;
     top: 0;
     box-shadow: 0 5px 15px rgba(204, 202, 202, 0.5);
-    transition: opacity 0.3s ease; /* Apply transition to opacity property */
+    transition: opacity 0.3s ease;
   }
   
   .navigator a:hover {
-      opacity: 0.7; /* Reduce opacity on hover */
+      opacity: 0.7;
   }
 
 .logo {
@@ -44,20 +46,128 @@ body {
     color: white;
     text-decoration: none;
     font-family: 'Courier New', Courier, monospace;
+}*/
+
+
+
+.banner {
+  width: 100%;
+  height: 100vh;
 }
 
+.navbar {
+  width: 85%;
+  margin: auto;
+  padding-top: 35px;
+  padding-left: 100px;
+  padding-right: 70px;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  position: fixed;
+  top: 0;
+}
 
-/* Media query for devices with a maximum width of 600px (typical for phones) */
+.logo {
+  width: 70px;
+  cursor: pointer;
+
+}
+
+.navbar ul li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 20px;
+  position: relative;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.navbar ul li::after {
+  content: '';
+  height: 3px;
+  width: 0;
+  background-color: #009688;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  transition: 0.5s;
+}
+
+.navbar ul li:hover::after {
+  width: 100%;
+}
+
+.content {
+  width: 70%;
+  margin-top: 20%;
+  margin-left: 17%;
+  text-align: center;
+  color: #fff;
+}
+
+.content h1 {
+  font-size: 70px;
+  margin-top: 80px;
+}
+
+.content p{
+  margin: 20px auto;
+  font-weight: 100;
+  line-height: 25px;
+}
+
+button {
+  width: 200px;
+  padding: 15px 0;
+  text-align: center;
+  margin: 20px 10px;
+  border-radius: 25px;
+  font-weight: bold;
+  border: 2px solid #009688;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+span {
+  background: #009688;
+  height: 100%;
+  width: 0;
+  border-radius: 25px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  transition: 0.5s;
+}
+
+button:hover span {
+  width: 100%;
+}
+
+button:hover {
+  border: none;
+}
+
+/*
 @media only screen and (max-width: 600px) {
     .header {
-        height: 80px; /* Adjust height for smaller screens */
-        /* You can add additional styles for smaller screens here */
+        height: 80px; 
+
     }
 }
 
-/* Define styles for desktop/tablet screens */
+
 @media only screen and (min-width: 601px) {
-    /* Table styles */
+
     .table {
       margin: 50px;
     }
@@ -71,54 +181,54 @@ body {
     td {
       color: white;
       text-align: center;
-      border: 0.2px solid rgba(0, 0, 0, 0.964); /* Adjust border as needed */
+      border: 0.2px solid rgba(0, 0, 0, 0.964); 
     }
     
     thead {
       background-color: gray;
     }
   
-    /* Bar graph styles */
+  
     .container {
       margin: 50px;
       margin-top: 120px;
       display: flex;
       flex-direction: row;
       height: 500px;
-      width: calc(100% - 100px); /* Subtract twice the margin size from 100% */
+      width: calc(100% - 100px); 
     }
   }
   
-  /* Define styles for mobile screens */
+
   @media only screen and (max-width: 600px) {
-    /* Table styles */
+
     .table {
       margin: 10px;
     }
     
     th,
-  
-    /* Bar graph styles */
+
     .container {
-      margin: 10px; /* Adjust margin size for mobile */
+      margin: 10px;
       display: flex;
       flex-direction: column;
-      height: auto; /* Adjust height for mobile */
+      height: auto;
     }
     
     .innercontainer {
-      margin-bottom: 10px; /* Adjust margin between bars for mobile */
+      margin-bottom: 10px;
       width: 100%;
     }
   
     .innercontainer div {
-      width: auto; /* Adjust width for bars for mobile */
+      width: auto; 
     }
-  }
+  }*/
   
 
 .maincontainer {
     width: 100%;
+    margin-bottom: 20px;
 }
 
 
