@@ -234,7 +234,7 @@ button:hover {
 
 .container {
     margin: 50px;
-    margin-top: 120px;
+    margin-top: 150px;
     display: flex;
     flex-direction: row;
     height: 300px;
@@ -286,7 +286,7 @@ table {
     background-color: rgb(34, 34, 34);
 }
 
-.currency {
+td.currency {
   padding: 0px;
   border: none;
 }
@@ -308,7 +308,7 @@ thead {
     background-color: rgb(66, 64, 64);
 }
 
-.assettd {
+td.asset_td {
   border: none;
 }
 

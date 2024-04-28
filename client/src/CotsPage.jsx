@@ -83,11 +83,12 @@ function CotsPage() {
             const totalPosition = item.noncomm_positions_long_all + item.noncomm_positions_short_all;
             const longHeight = (item.noncomm_positions_long_all / totalPosition) * 300;
             const longpercentage = ((item.noncomm_positions_long_all / totalPosition) * 100).toFixed(2);
+            const shortpercentage = (100 - (longpercentage)).toFixed(2);
             const preweek_long = (item.noncomm_positions_long_all - item.change_in_noncomm_long_all);
             const preweek_short = (item.noncomm_positions_short_all - item.change_in_noncomm_short_all);
             const preweek_total = (preweek_long + preweek_short);
-            const preweek_long_percent = ((preweek_long / preweek_total) * 100).toFixed(2);
-            const netchange = (preweek_long_percent - longpercentage);
+            const preweek_short_percent = ((preweek_short / preweek_total) * 100).toFixed(2);
+            const netchange = (preweek_short_percent - shortpercentage);
 
             return {
                 ...item,
@@ -156,8 +157,8 @@ function CotsPage() {
                                 const preweek_long = (item.noncomm_positions_long_all - item.change_in_noncomm_long_all);
                                 const preweek_short = (item.noncomm_positions_short_all - item.change_in_noncomm_short_all);
                                 const preweek_total = (preweek_long + preweek_short);
-                                const preweek_long_percent = ((preweek_long / preweek_total) * 100).toFixed(2);
-                                const netchange = (preweek_long_percent - longpercentage).toFixed(2);
+                                const preweek_short_percent = ((preweek_short / preweek_total) * 100).toFixed(2);
+                                const netchange = (preweek_short_percent - shortpercentage).toFixed(2);
                                 return (
                                     <tr key={index}>
                                         <td className='asset_td' style={{ backgroundColor: netchange > 0 ? `rgba(65, 88, 208, ${1 - index * 0.05})` : `rgba(233, 101, 101, ${index * 0.03})` }}>{renderSwitch(item.cftc_contract_market_code)}</td>
