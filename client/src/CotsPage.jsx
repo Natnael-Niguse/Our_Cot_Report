@@ -17,12 +17,7 @@ function CotsPage() {
             }
             const data = await response.json();
             const dataArray = Object.values(data); // Convert object values to array
-            const sortedArray = dataArray.sort((a, b) => {
-                // Sort in descending order based on noncomm_positions_long_all values
-                return b[0].noncomm_positions_long_all - a[0].noncomm_positions_long_all;
-            });
-            setData(sortedArray);
-            console.log(sortedArray);
+            setData(dataArray);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -82,11 +77,8 @@ function CotsPage() {
         let count = 0;
         let sortedItemGroup = [];
     
-        // Sort the data based on noncomm_positions_long_all values in descending order
-        const sortedData = data !== null ? [...data].sort((a, b) => b[0].noncomm_positions_long_all - a[0].noncomm_positions_long_all) : [];
-    
         // Calculate longHeight for each item and sort based on it
-        sortedData.forEach((itemGroup, index) => {
+        data.forEach((itemGroup, index) => {
             const calculatedItemGroup = itemGroup.map(item => {
             const totalPosition = item.noncomm_positions_long_all + item.noncomm_positions_short_all;
             const longHeight = (item.noncomm_positions_long_all / totalPosition) * 300;
@@ -104,16 +96,13 @@ function CotsPage() {
             };
         });
 
-            // Sort calculatedItemGroup based on longHeight in descending order
-            const sortedGroup = calculatedItemGroup.sort((a, b) => b.longHeight - a.longHeight);
-            sortedItemGroup.push(sortedGroup);
+            sortedItemGroup.push(calculatedItemGroup);
         });
     
         // Flatten the array of arrays and sort it based on longHeight in descending order
         const flattenedSortedItemGroup = sortedItemGroup.flat().sort((a, b) => b.longHeight - a.longHeight);
         // Flatten the array of arrays and sort it based on longHeight in descending order
         const tableSortedItemGroup = sortedItemGroup.flat().sort((a, b) => b.netchange - a.netchange);
-        console.log(tableSortedItemGroup)
     
         return (
             <>
@@ -130,20 +119,14 @@ function CotsPage() {
                         // Increment the count variable for each iteration of the loop
                         count++;
                         const totalPosition = item.noncomm_positions_long_all + item.noncomm_positions_short_all;
-                        const longHeight = (item.noncomm_positions_long_all / totalPosition) * 300 + 'px'; // Convert to 'px' after sorting
+                        const longHeight = (item.longHeight) + 'px'; // Convert to 'px' after sorting
                         const shortHeight = (300 - (item.noncomm_positions_long_all / totalPosition) * 300) + 'px'; // Calculate shortHeight based on longHeight
-                        const longpercentage = ((item.noncomm_positions_long_all / totalPosition) * 100).toFixed(2);
-                        const shortpercentage = (100 - longpercentage).toFixed(2);
-                        const dataLength = sortedData.length;
-                        const innercontainerwidth = (100 / dataLength) + '%';
     
                         return (
                             <div className='innercontainer' style={{ width: "3%", margin: '5px'}}>
                                 <div className='belowbar' style={{ height: shortHeight, backgroundColor: 'rgb(233, 101, 101)' }}>
-                                    {/* <p>{shortpercentage}%</p>*/}
                                 </div>
                                 <div className='abovebar' style={{ height: longHeight, backgroundColor: 'rgb(65, 88, 208)' }}>
-                                    {/* <p>{longpercentage}%</p>*/}
                                 </div>
                                 <p className='barname' style={{ marginTop: count % 2 === 0 ? '0px' : '20px' }}>{renderSwitch(item.cftc_contract_market_code)}</p>
                             </div>
